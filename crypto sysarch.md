@@ -2,8 +2,8 @@
 
 Yigid BALABAN, <fyb@fybx.dev>
 
-Revision 2
-23/08/2024
+Revision 3
+20/09/2024
 
 ## System Elements
 
@@ -35,17 +35,26 @@ The client (the sender) generates the encrypted payload to be sent to the reciev
 $Q_{r}:\text{Recipient's public key on curve secp256k1}$
 $G:\text{The generator point on curve secp256k1}$
 $Z:\text{A symmetric key derived for the file to be sent, the shared secret}$
-$F:\text{The file contents, in plaintext}$
+$F_c:\text{The file contents, in plaintext}$
+$F_m:\text{File's metadata, name, etc}$
+$F:\text{The intermediate file format, ready to be encrypted}$
 $F_{c}:\text{The file contents, in ciphertext}$
 $IV:\text{The initialization vector required for AES-GCM-256}$
 $P:\text{The payload, what is sent to the recipient}$
+
+The $F$, intermediate file format is as follows:
+
+| Bytes               | \[0]..4         | \[4]..1024           | \[1024]...1024+len($F_c$) |
+| ------------------- | --------------- | -------------------- | ------------------------- |
+| **Content**         | Length of $F_m$ | $F_m$                | $F_c$                     |
+| **Length in bytes** | 4 bytes         | 1020 (255 * 4 bytes) | variable                  |
 
 #### Workflow
 
 1. The $Q_{r}$ is retrieved from the CCIR.
 2. An ephemeral keypair is generated, $Q_{e}$ and $d_{e}$.
 3. The shared secret which will be used in symmetric encryption is computed from $Z=d_{e}\times Q_{r}$.
-5. File $F$ is encrypted using AES-GCM-256 with encryption key $Z$, and a randomly generated initialization vector, $IV$.
+5. File intermediate $F$ is encrypted using AES-GCM-256 with encryption key $Z$, and a randomly generated initialization vector, $IV$.
 7. The payload $P$ is created by concatenating $Q_{e},\;IV,\;\text{MAC},\;F_{e}$.
 8. The payload is uploaded to the EFS.
 
