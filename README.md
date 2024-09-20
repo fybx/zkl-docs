@@ -9,10 +9,10 @@ Take everything with a grain of salt.
 
 ## contents
 
-| Document                        | Description                                                                 |
-| ------------------------------- | --------------------------------------------------------------------------- |
-| [[1. Elements]]                 | Overview of modules, submodules and their functionalities                   |
-| [[2. Cryptographic Activities]] | A detailed explanation of cryptographic activities and their implementation |
+| Document                                                                         | Description                                                                 |
+| -------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| [1. Elements](./architecture/1.%20Elements.md)                                   | Overview of modules, submodules and their functionalities                   |
+| [2. Cryptographic Activities](./architecture/2.%20Cryptographic%20Activities.md) | A detailed explanation of cryptographic activities and their implementation |
 
 ## credits
 
